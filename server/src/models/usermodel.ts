@@ -1,15 +1,35 @@
 import mongoose,{Schema} from "mongoose";
+import { comparePasswords, hashPasword } from "../utils/hashPassword";
 
-const userSchema= new Schema(
-    {
-        name:{type : String, required:true},
-        email:{type : String, required:true, unique:true},
-        password:{type : String, required:true},
-        avatar: {type: String },
+export interface Iuser {
+  name: string;
+  email: string;
+  password: string;
+  avatar?: string;
+  createdAt: Date;
+  updatedAt: Date;
+  matchPassword(plain:String): Promise<Boolean>;
+}
 
-    },
-    {
-  timestamps: true 
+const userSchema:Schema<Iuser> =new Schema({
+  "name": {type: String, required: true},
+  "email": {type: String, required: true,unique:true,lowercase: true},
+  "password": {type: String, required: true},
+  "avatar": {type: String},
+},{
+  timestamps:true
+});
+
+userSchema.pre("save", async function(next){
+  if(!this.isModified("password")) return next();
+
+  this.password=await hashPasword(this.password)
+  next()
 })
 
-export const User = mongoose.model("User", userSchema);
+userSchema.methods.matchPassword= async function(plain:string){
+  return comparePasswords(plain, this.password)
+}
+
+const User= mongoose.model<Iuser>("User",userSchema)
+export default  User;
