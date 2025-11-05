@@ -20,6 +20,7 @@ const userSchema:Schema<Iuser> =new Schema({
   timestamps:true
 });
 
+//storing a prehashed password in db
 userSchema.pre("save", async function(next){
   if(!this.isModified("password")) return next();
 
@@ -27,6 +28,7 @@ userSchema.pre("save", async function(next){
   next()
 })
 
+//function to get access for matchPasswords directly
 userSchema.methods.matchPassword= async function(plain:string){
   return comparePasswords(plain, this.password)
 }
