@@ -9,8 +9,11 @@ export interface AuthRequest extends Request {
 }
 
 export async function protect(req: AuthRequest, res: Response, next: NextFunction) {
+  const header = req.headers.authorization;
+  console.log(header)
   try {
     const header = req.headers.authorization;
+    
     if (!header || !header.startsWith("Bearer ")) {
       return res.status(401).json({ success: false, message: "Not authorized" });
     }

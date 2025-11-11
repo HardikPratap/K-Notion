@@ -3,7 +3,7 @@ import User from "../models/usermodel";
 import { signToken } from "../utils/generateToken";
 import { asyncHandler } from "../middleware/asynchandler";
 
-export async function Register(req:Request,res: Response){
+export async function register(req:Request,res: Response){
     const { name, email, password } = req.body;
     if(!name || !email || !password) 
         return res.status(400).json({
