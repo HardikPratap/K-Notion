@@ -30,3 +30,7 @@ const linkSchema: Schema<ILink>= new Schema({
   },
   { timestamps: true }
 );
+
+const Link= mongoose.model<ILink>("Link",linkSchema)
+
+export default Link;
