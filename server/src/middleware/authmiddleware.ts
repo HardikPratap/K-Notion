@@ -17,7 +17,7 @@ export async function protect(req: AuthRequest, res: Response, next: NextFunctio
     if (!header || !header.startsWith("Bearer ")) {
       return res.status(401).json({ success: false, message: "Not authorized" });
     }
-    const token = header.split(" ")[1];
+    const token =req.cookies?.token|| header.split(" ")[1];
      if (!token) {
         return res.status(401).json({ success: false, message: "Invalid token format" });
     }

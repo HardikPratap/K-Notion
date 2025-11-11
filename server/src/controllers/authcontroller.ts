@@ -34,10 +34,32 @@ export async function login(req:Request,res: Response){
   if (!matched) return res.status(401).json({ success: false, message: "Wrong Password" });
 
     const token = signToken({ id: user._id });
+
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production", // true on HTTPS
+  sameSite: "strict",
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+});
+
   res.json({ success: true, data: { user: { id: user._id, name: user.name, email: user.email }, token } });
 }
 
 export const getMe = asyncHandler(async (req: any, res: Response) => {
   const user = req.user;
   res.json({ success: true, data: user });
+});
+
+
+export const logoutUser = asyncHandler(async (req: any, res: Response) => {
+  res.clearCookie("token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully"
+  });
 });
