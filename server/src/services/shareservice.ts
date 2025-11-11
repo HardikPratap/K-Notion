@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "uuid";
-import Share from "../models/shar";
+import Share from "../models/sharemodel";
+
 
 export async function createShare(itemType: "brain" | "link" | "note", itemId: string, expiresAt?: Date) {
   const token = uuidv4();
