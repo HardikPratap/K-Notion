@@ -7,6 +7,6 @@ export const ENV={
     MONGO_URI: process.env.MONGO_URI || "",
     JWT_SECRET: process.env.JWT_SECRET || "changeme",
     JWT_EXPIRY: process.env.JWT_EXPIRY || "7d",
-    CLIENT_URL: process.env.CLIENT_URL || "http://localhost:3000",
+    CLIENT_URL: process.env.CLIENT_URL || "http://localhost:5174",
     OPENAI_API_KEY: process.env.OPENAI_API_KEY || ""
 }

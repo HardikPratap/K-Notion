@@ -21,11 +21,11 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => res.json({ success: true, message: "Second Brain API" }));
 
 // Mount APIs
-app.use("/api/auth", authRoutes);
-app.use("/api/brains", brainRoutes);
-app.use("/api/links", linkRoutes);
-app.use("/api/notes", noteRoutes);
-app.use("/api/share", shareRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/brains", brainRoutes);
+app.use("/api/v1/links", linkRoutes);
+app.use("/api/v1/notes", noteRoutes);
+app.use("/api/v1/share", shareRoutes);
 
 // Error handler
 app.use(errorHandler);
